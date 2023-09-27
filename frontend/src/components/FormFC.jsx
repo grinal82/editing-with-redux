@@ -82,7 +82,7 @@ const FormFC = () => {
             onChange={handleChange}
           />
         <button onClick={handleSubmit}>Сохранить</button>
-        <button onClick={handleCancel}>Отменить</button>
+        <button id='delete-btn' onClick={handleCancel}>Отменить</button>
       </div>
       )}
     </>
