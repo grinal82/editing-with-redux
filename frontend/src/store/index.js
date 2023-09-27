@@ -3,7 +3,7 @@ import myReducer from './reducer'
 
 const store = configureStore({
     reducer: {
-        myReducer: myReducer
+        itemsReducer: myReducer
     }
 })
 

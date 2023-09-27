@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import  ReactDOM  from 'react-dom/client';
 import store from './store';
 import { Provider } from 'react-redux';
 import './index.css';
@@ -7,10 +7,15 @@ import App from './App';
 
 
 
-const root = createRoot(document.getElementById('root')); 
+
 // оборачиваем App в провайдер, передаем хранилище (store), чтобы все компоненты ниже по цепочке имели к нему доступ
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
 );
