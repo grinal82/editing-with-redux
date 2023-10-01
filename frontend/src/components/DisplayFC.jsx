@@ -11,13 +11,14 @@ const DisplayFC = () => {
   const filteredItems = items.filter(item => item.service.toLowerCase().includes(filter.toLowerCase()));
   // инициализируем dispatch
   const dispatch = useDispatch();
+  // запускаем диспечер для экшена editItem, который поменяет состояние editingItem в store
   const handleEdit = (id, service, cost) => {
     dispatch(editItem({id, service, cost}));
   };
   const handleDelete = (itemId) => {
     dispatch(deleteItem({ id: itemId}));
   };
-
+// если в filter есть хоть одна строка, то рендерим массив filteredItems(отфильтрованный), иначе рендерим массив items(все услуги)
   return (
     <div className='items-wrapper'>
       {filter.length>0 ? (filteredItems.map((item) => (

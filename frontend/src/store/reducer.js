@@ -36,16 +36,16 @@ const itemsSlice = createSlice({
 
     editItemSubmit: (state, action) => {
       const { id, service, cost } = action.payload;
-      const updatedItems = [...state.items];
-      updatedItems[id] = { service, cost };
-      
-      console.log('after update', updatedItems);
-
-      return {
-        ...state,
-        items: updatedItems,
-        editingItem: null
-      };
+      // Мэпимся по массиву и находим нужный элемент сравнивая id эдемента и id прилетевший в payload
+      const updatedItems = state.items.map(item => {
+        if (item.id === id) {
+          // возвращаем новый элемент с измененными данными
+          return { ...item, service, cost };
+        }
+        return item;
+      });
+      //  возвращаем обновленный массив
+      return { ...state, items: updatedItems };
     },
 
     cancelEdit: (state) =>{
