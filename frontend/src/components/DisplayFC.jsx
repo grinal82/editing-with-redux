@@ -3,36 +3,55 @@ import { deleteItem, editItem } from '../store/reducer'
 
 
 const DisplayFC = () => {
-  // достаем данные из store
+  // достаем массив данных о всех услугах и ценах из store
   const items = useSelector(state => state.itemsReducer.items);
+  // достаем строковые данные хранящиеся в filter из store
+  const filter = useSelector(state => state.itemsReducer.filter);
+  // фильтруем данные путем сравнения вхождения строки из фильтра в поле 'service' массива 'items',хранящегося в store
+  const filteredItems = items.filter(item => item.service.toLowerCase().includes(filter.toLowerCase()));
   // инициализируем dispatch
   const dispatch = useDispatch();
-  const handleEdit = (index, service, cost) => {
-    dispatch(editItem({index, service, cost}));
+  const handleEdit = (id, service, cost) => {
+    dispatch(editItem({id, service, cost}));
   };
-  const handleDelete = (index) => {
-    dispatch(deleteItem(index));
+  const handleDelete = (itemId) => {
+    dispatch(deleteItem({ id: itemId}));
   };
 
   return (
     <div className='items-wrapper'>
-      {items.map((item, index) => (
-        <div key={index}>
+      {filter.length>0 ? (filteredItems.map((item) => (
+        <div key={item.id}>
           <span className='item'>{item.service} - {item.cost}</span>
           <span
-            onClick={() => handleEdit(index, item.service, item.cost)}
+            onClick={() => handleEdit(item.id, item.service, item.cost)}
             style={{ cursor: 'pointer', marginLeft: '10px' }}
           >
             📝
           </span>
           <span
-            onClick={() => handleDelete(index)}
+            onClick={() => handleDelete(item.id)}
             style={{ cursor: 'pointer', marginLeft: '10px' }}
           >
             ❌
           </span>
         </div>
-      ))}
+      ))):(items.map((item) => (
+        <div key={item.id}>
+          <span className='item'>{item.service} - {item.cost}</span>
+          <span
+            onClick={() => handleEdit(item.id, item.service, item.cost)}
+            style={{ cursor: 'pointer', marginLeft: '10px' }}
+          >
+            📝
+          </span>
+          <span
+            onClick={() => handleDelete(item.id)}
+            style={{ cursor: 'pointer', marginLeft: '10px' }}
+          >
+            ❌
+          </span>
+        </div>)))}
     </div>
   );
 };
